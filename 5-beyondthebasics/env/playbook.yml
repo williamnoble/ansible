@@ -1,0 +1,25 @@
+---
+- hosts: all
+  become: yes
+
+  tasks:
+    - name: Add env var to shell
+      lineinfile:
+        dest: ~/.bash_profile
+        regexp: "^ENV_VAR"
+        line: "ENV_VAR=value"
+
+    - name: Get the env var we just added.
+      shell: "source ~/.bash_profile && echo $ENV_VAR"
+      register: foo
+
+    - name: Print the value of our newly created env var.
+      debug:
+        msg: "The variable is {{ foo.stdout }}"
+
+    - name: Add a global environment variable.
+      lineinfile:
+        dest: /etc/environment
+        regexp: "^ENV_VAR="
+        line: "ENV_VAR=value"
+      become: yes

@@ -1,0 +1,17 @@
+---
+- name: Add profile into to user.
+  copy:
+    src: example_profile
+    dest: "/home/{{ username }}/.profile"
+    owner: "{{ username }}"
+    group: "{{ username }}"
+    mode: 0744
+
+- name: Add private keys to user.
+  copy:
+    src: " {{ item.src }}"
+    dest: "/home/{{ username }}/.ssh/{{ item.dest }}"
+    owner: "{{ username }}"
+    group: "{{ username }}"
+    mode: 0600
+  with_items: "{{ ssh_private_keys }}"

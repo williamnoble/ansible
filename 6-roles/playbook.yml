@@ -1,0 +1,12 @@
+---
+- hosts: all
+  become: true
+
+  pre_tasks:
+    -
+
+  roles:
+    - nodejs
+
+  tasks:
+    - name: Do something.

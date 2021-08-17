@@ -1,0 +1,13 @@
+---
+- name: Install NodeJS
+  yum:
+    name: npm
+    state: present
+    enablerepo: epel
+
+- name: Install forever module
+  npm:
+    name: forever
+    global: true
+    state: present
+    with_items: "{{ node_npm_modules }}"
